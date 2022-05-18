@@ -32,7 +32,7 @@ export default class Particles {
 	}
 
 	initPoints(discard) {
-		this.numPoints = this.width * this.height;
+		this.numPoints = this.width * this.height * 32;
 
 		let numVisible = this.numPoints;
 		let threshold = 0;
@@ -41,7 +41,7 @@ export default class Particles {
 		if (discard) {
 			// discard pixels darker than threshold #22
 			numVisible = 0;
-			threshold = 34;
+			threshold = 0; // 34;
 
 			const img = this.texture.image;
 			const canvas = document.createElement('canvas');
@@ -56,7 +56,7 @@ export default class Particles {
 			originalColors = Float32Array.from(imgData.data);
 
 			for (let i = 0; i < this.numPoints; i++) {
-				if (originalColors[i * 4 + 0] > threshold) numVisible++;
+				if (originalColors[i] > threshold) numVisible++;
 			}
 
 			// console.log('numVisible', numVisible, this.numPoints);
@@ -107,7 +107,7 @@ export default class Particles {
 		const angles = new Float32Array(numVisible);
 
 		for (let i = 0, j = 0; i < this.numPoints; i++) {
-			if (discard && originalColors[i * 4 + 0] <= threshold) continue;
+			if (discard && originalColors[i] <= threshold) continue;
 
 			offsets[j * 3 + 0] = i % this.width;
 			offsets[j * 3 + 1] = Math.floor(i / this.width);

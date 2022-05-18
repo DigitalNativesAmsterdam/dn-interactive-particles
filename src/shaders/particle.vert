@@ -56,7 +56,7 @@ void main() {
 
 	// particle size
 	float psize = (snoise_1_2(vec2(uTime, pindex) * 0.5) + 2.0);
-	psize *= max(grey, 0.2);
+	psize *= max(grey, 0.3);
 	psize *= uSize;
 
 	// final position
