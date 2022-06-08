@@ -92,6 +92,7 @@ export default class InteractiveControls extends EventEmitter {
 	onMove(e) {
 		const t = (e.touches) ? e.touches[0] : e;
 		const touch = { x: t.clientX, y: t.clientY };
+		console.log(touch);
 
 		this.mouse.x = ((touch.x + this.rect.x) / this.rect.width) * 2 - 1;
 		this.mouse.y = -((touch.y + this.rect.y) / this.rect.height) * 2 + 1;
@@ -117,11 +118,14 @@ export default class InteractiveControls extends EventEmitter {
 			this.plane.setFromNormalAndCoplanarPoint(this.camera.getWorldDirection(this.plane.normal), object.position);
 
 			if (this.hovered !== object) {
+				console.log('this.hovered !== object => interactive-out & over');
 				this.emit('interactive-out', { object: this.hovered });
 				this.emit('interactive-over', { object });
 				this.hovered = object;
 			}
 			else {
+				// console.log(object);
+				// console.log(this.intersectionData);
 				this.emit('interactive-move', { object, intersectionData: this.intersectionData });
 			}
 		}

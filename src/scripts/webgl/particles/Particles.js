@@ -9,6 +9,7 @@ export default class Particles {
 	constructor(webgl) {
 		this.webgl = webgl;
 		this.container = new THREE.Object3D();
+		this.step = 0;
 	}
 
 	init(src) {
@@ -163,7 +164,9 @@ export default class Particles {
 
 	update(delta) {
 		if (!this.object3D) return;
-		if (this.touch) this.touch.update();
+		// if (this.touch) this.touch.update();
+		self.step += 1
+		this.touch.update(self.step);
 
 		this.object3D.material.uniforms.uTime.value += delta;
 	}
@@ -219,6 +222,7 @@ export default class Particles {
 	}
 
 	onInteractiveMove(e) {
+		console.log(e);
 		const uv = e.intersectionData.uv;
 		if (this.touch) this.touch.addTouch(uv);
 	}

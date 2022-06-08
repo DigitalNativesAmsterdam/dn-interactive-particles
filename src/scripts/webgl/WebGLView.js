@@ -20,6 +20,8 @@ export default class WebGLView {
 			'images/sample-06.png',
 		];
 
+		// this.step = 1;
+
 		this.initThree();
 		this.initParticles();
 		this.initControls();
@@ -62,7 +64,6 @@ export default class WebGLView {
 
 	update() {
 		const delta = this.clock.getDelta();
-
 		if (this.particles) this.particles.update(delta);
 	}
 
