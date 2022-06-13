@@ -165,8 +165,9 @@ export default class Particles {
 	update(delta) {
 		if (!this.object3D) return;
 		// if (this.touch) this.touch.update();
-		self.step += 1
-		this.touch.update(self.step);
+		// self.step += 1
+		this.webgl.interactive.onInteract();
+		this.touch.update(delta);
 
 		this.object3D.material.uniforms.uTime.value += delta;
 	}
@@ -222,7 +223,7 @@ export default class Particles {
 	}
 
 	onInteractiveMove(e) {
-		console.log(e);
+		// console.log(e);
 		const uv = e.intersectionData.uv;
 		if (this.touch) this.touch.addTouch(uv);
 	}

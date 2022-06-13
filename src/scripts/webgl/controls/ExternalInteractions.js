@@ -29,16 +29,6 @@ export default class InteractiveControls extends EventEmitter {
 
 		this.browser = browser();
 
-		// Coordinates
-		this.minX = -1
-		this.minY = -1;
-		this.maxX = 1;
-		this.maxY = 1;
-		this.xStep = 0.01;
-		this.yStep = 0.0;
-		this.interactX = this.minX;
-		this.interactY = 0;
-
 		this.enable();
 	}
 
@@ -102,11 +92,10 @@ export default class InteractiveControls extends EventEmitter {
 	onMove(e) {
 		const t = (e.touches) ? e.touches[0] : e;
 		const touch = { x: t.clientX, y: t.clientY };
-		// console.log(touch);
+		console.log(touch);
 
 		this.mouse.x = ((touch.x + this.rect.x) / this.rect.width) * 2 - 1;
 		this.mouse.y = -((touch.y + this.rect.y) / this.rect.height) * 2 + 1;
-		console.log(this.mouse);
 
 		this.raycaster.setFromCamera(this.mouse, this.camera);
 
@@ -137,65 +126,6 @@ export default class InteractiveControls extends EventEmitter {
 			else {
 				// console.log(object);
 				// console.log(this.intersectionData);
-				this.emit('interactive-move', { object, intersectionData: this.intersectionData });
-			}
-		}
-		else {
-			this.intersectionData = null;
-
-			if (this.hovered !== null) {
-				this.emit('interactive-out', { object: this.hovered });
-				this.hovered = null;
-			}
-		}
-	}
-
-	onInteract() {
-		// const t = (e.touches) ? e.touches[0] : e;
-		// const touch = { x: t.clientX, y: t.clientY };
-		// console.log(touch);
-		//
-		// this.mouse.x = ((touch.x + this.rect.x) / this.rect.width) * 2 - 1;
-		// this.mouse.y = -((touch.y + this.rect.y) / this.rect.height) * 2 + 1;
-		if (this.interactX > 1) { return }
-
-		this.mouse.x = this.interactX;
-		this.mouse.y = this.interactY;
-
-		this.interactX += this.xStep;
-		this.interactY += this.yStep;
-
-		console.log(this.mouse);
-
-		this.raycaster.setFromCamera(this.mouse, this.camera);
-
-		/*
-		// is dragging
-		if (this.selected && this.isDown) {
-			if (this.raycaster.ray.intersectPlane(this.plane, this.intersection)) {
-				this.emit('interactive-drag', { object: this.selected, position: this.intersection.sub(this.offset) });
-			}
-			return;
-		}
-		*/
-
-		const intersects = this.raycaster.intersectObjects(this.objects);
-
-		if (intersects.length > 0) {
-			const object = intersects[0].object;
-			this.intersectionData = intersects[0];
-
-			this.plane.setFromNormalAndCoplanarPoint(this.camera.getWorldDirection(this.plane.normal), object.position);
-
-			if (this.hovered !== object) {
-				console.log('this.hovered !== object => interactive-out & over');
-				this.emit('interactive-out', { object: this.hovered });
-				this.emit('interactive-over', { object });
-				this.hovered = object;
-			}
-			else {
-				// console.log(object);
-				console.log(this.intersectionData);
 				this.emit('interactive-move', { object, intersectionData: this.intersectionData });
 			}
 		}
