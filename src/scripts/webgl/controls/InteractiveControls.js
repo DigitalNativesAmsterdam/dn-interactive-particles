@@ -62,12 +62,12 @@ export default class InteractiveControls extends EventEmitter {
 
 		if (this.browser.mobile) {
 			this.el.addEventListener('touchstart', this.handlerDown, passiveEvent);
-			this.el.addEventListener('touchmove', this.handlerMove, passiveEvent);
+			// this.el.addEventListener('touchmove', this.handlerMove, passiveEvent);
 			this.el.addEventListener('touchend', this.handlerUp, passiveEvent);
 		}
 		else {
 			this.el.addEventListener('mousedown', this.handlerDown);
-			this.el.addEventListener('mousemove', this.handlerMove);
+			// this.el.addEventListener('mousemove', this.handlerMove);
 			this.el.addEventListener('mouseup', this.handlerUp);
 			this.el.addEventListener('mouseleave', this.handlerLeave);
 		}
@@ -76,12 +76,12 @@ export default class InteractiveControls extends EventEmitter {
 	removeListeners() {
 		if (this.browser.mobile) {
 			this.el.removeEventListener('touchstart', this.handlerDown);
-			this.el.removeEventListener('touchmove', this.handlerMove);
+			// this.el.removeEventListener('touchmove', this.handlerMove);
 			this.el.removeEventListener('touchend', this.handlerUp);
 		}
 		else {
 			this.el.removeEventListener('mousedown', this.handlerDown);
-			this.el.removeEventListener('mousemove', this.handlerMove);
+			// this.el.removeEventListener('mousemove', this.handlerMove);
 			this.el.removeEventListener('mouseup', this.handlerUp);
 			this.el.removeEventListener('mouseleave', this.handlerLeave);
 		}
